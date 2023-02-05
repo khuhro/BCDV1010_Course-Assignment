@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.4.17;
 
+
 contract CustomerDB {
+
 
    /*
     declare Two event 
@@ -10,6 +12,7 @@ contract CustomerDB {
   */
   event OrderPurchased(uint idOrder);
   event OrderShipped(uint idOrder);
+
 
     /*
     Declaration Struct Customer Object
@@ -20,6 +23,20 @@ contract CustomerDB {
     uint idCustomer;
     string customerName;
   }
+
+  contract Customer {
+  struct CustomerData {
+    string name;
+    string email;
+    string password;
+  }
+
+  CustomerData[] public customers;
+
+  function addCustomer(uint _idCustomer, string memory _customerName) public {
+    customers.push(CustomerData( _idCustomer, _customerName));
+  }
+}
 
     /*
     Declaration Struct Order Object
@@ -37,27 +54,32 @@ contract CustomerDB {
     bool shipped;
   }
 
+
     /* 
     Declared the STATE variable idOrder as uint datat and, assign value as 0
     Mapping uint to Customer and stored in customers
     Mapping uint to Order and stored in orders
   */
-
   uint idOrder = 0;
   mapping (uint => Customer) customers;
   mapping (uint => Order) orders;
 
-  /*
-      Creating a constructor
-      adding three valuses of the customers in the constructor
-  */ 
+/*
+  // Comment...
   constructor() public {
+      
+// Currently adding customers in the constructor.
+      // ***
+      // *** NOTE: As part of the assignment commenting all the code to show your understanding, 
+      // *** you need to write a function to add Customers through the Remix interface instead of in the constructor, and delete the constructor.
+
       customers[0] = Customer(0, "John Smith");
       customers[1] = Customer(1, "Sarah Webster");
       customers[2] = Customer(2, "Dev Patel");
      
   }
 
+*/
 
     /*
     Function purchaseItem to purchase the item and visiabity is public
@@ -76,6 +98,7 @@ contract CustomerDB {
     orders[idOrder] = Order(idOrder, _custId, _itemName, _quantity, false);
     emit OrderPurchased(idOrder);
   }
+
 
     /*
     Function shipItem to the item shipped and visiabity is public
